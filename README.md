@@ -14,7 +14,7 @@ podendo acessar uma marca específica mostrando assim os seus respectivos modelo
    Abra o git bash no seu diretório de projetos e execute:
 
    ```bash
-   git https://github.com/devjoedson91/teddy-mobile-test.git
+   git https://github.com/devjoedson91/teste-SGBR-sistemas.git
    ```
 
 2. Instalando dependências
