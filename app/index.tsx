@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   View,
   Keyboard,
+  ActivityIndicator,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useContext, useEffect, useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
-import { AuthContext } from "@/hooks/AuthContext";
+import { AuthContext } from "@/data/contexts/AuthContext";
 
 const schema = z.object({
   user: z.string({ message: "Informe seu usuário" }),
@@ -110,7 +111,11 @@ export default function SignIn() {
           onPress={handleSubmit(handleNavigation)}
           disabled={loadingAuth}
         >
-          <Text className="text-white text-2xl font-bold">Entrar</Text>
+          {loadingAuth ? (
+            <ActivityIndicator size={24} color="#fff" />
+          ) : (
+            <Text className="text-white text-2xl font-bold">Entrar</Text>
+          )}
         </TouchableOpacity>
       </Animatable.View>
     </SafeAreaView>

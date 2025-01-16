@@ -6,12 +6,15 @@ import {
   Text,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { useGetBrands } from "@/data/hooks/useBrands";
+import { useGetBrandsId } from "@/data/hooks/useBrands";
 import { BrandItem } from "@/components/brand-item";
 import { Header } from "@/components/header";
+import { useLocalSearchParams } from "expo-router";
 
-export default function Home() {
-  const { data: brands, isFetching } = useGetBrands();
+export default function Model() {
+  const params = useLocalSearchParams();
+
+  const { data: models, isFetching } = useGetBrandsId(params.id as string);
 
   return (
     <KeyboardAvoidingView
@@ -24,17 +27,20 @@ export default function Home() {
         animation="fadeInUp"
         className="flex-1 justify-center bg-white rounded-t-[50px] p-5"
       >
+        <Text className="text-center text-darkBlue text-xl">
+          Modelos relacionados a marca:
+        </Text>
         <Text className="text-center text-mainBlue font-bold text-2xl">
-          Marcas
+          {params.name}
         </Text>
 
         {isFetching ? (
-          <ActivityIndicator color="#0062fe" size={24} />
+          <ActivityIndicator size={24} color="#0062fe" />
         ) : (
           <FlatList
-            data={brands || []}
+            data={models || []}
             contentContainerStyle={{ gap: 20, marginTop: 40 }}
-            renderItem={({ item }) => <BrandItem item={item} />}
+            renderItem={({ item }) => <BrandItem item={item} disabled />}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.codigo}
           />
