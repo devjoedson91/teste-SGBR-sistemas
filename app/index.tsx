@@ -16,12 +16,8 @@ import Feather from "@expo/vector-icons/Feather";
 import { AuthContext } from "@/hooks/AuthContext";
 
 const schema = z.object({
-  user: z
-    .string({ message: "Informe seu usuário" })
-    .min(1, { message: "Informe um usuário válido" }),
-  password: z
-    .string({ message: "Informe sua senha" })
-    .min(4, { message: "A senha precisa ter no mínimo 4 caracteres" }),
+  user: z.string({ message: "Informe seu usuário" }),
+  password: z.string({ message: "Informe sua senha" }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -39,7 +35,7 @@ export default function SignIn() {
 
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-  const { signIn } = useContext(AuthContext);
+  const { signIn, loadingAuth } = useContext(AuthContext);
 
   useEffect(() => {
     const showWelcomeText = Keyboard.addListener("keyboardDidShow", () => {
@@ -112,6 +108,7 @@ export default function SignIn() {
         <TouchableOpacity
           className="h-16 w-full rounded bg-darkBlue items-center justify-center"
           onPress={handleSubmit(handleNavigation)}
+          disabled={loadingAuth}
         >
           <Text className="text-white text-2xl font-bold">Entrar</Text>
         </TouchableOpacity>
