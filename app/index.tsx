@@ -11,16 +11,16 @@ import {
 import * as Animatable from "react-native-animatable";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
-import { useRouter } from "expo-router";
+import { AuthContext } from "@/hooks/AuthContext";
 
 const schema = z.object({
-  email: z
-    .string({ message: "Informe o E-mail" })
-    .email({ message: "O e-mail está inválido" }),
+  user: z
+    .string({ message: "Informe seu usuário" })
+    .min(1, { message: "Informe um usuário válido" }),
   password: z
-    .string({ message: "Informe a senha" })
+    .string({ message: "Informe sua senha" })
     .min(4, { message: "A senha precisa ter no mínimo 4 caracteres" }),
 });
 
@@ -39,7 +39,7 @@ export default function SignIn() {
 
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-  const router = useRouter();
+  const { signIn } = useContext(AuthContext);
 
   useEffect(() => {
     const showWelcomeText = Keyboard.addListener("keyboardDidShow", () => {
@@ -56,8 +56,8 @@ export default function SignIn() {
     };
   }, []);
 
-  function handleNavigation(data: z.infer<typeof schema>) {
-    router.push("/home");
+  async function handleNavigation(data: z.infer<typeof schema>) {
+    await signIn(data);
   }
 
   return (
@@ -83,10 +83,10 @@ export default function SignIn() {
         )}
 
         <Input
-          name="email"
+          name="user"
           control={control}
-          placeholder="E-mail"
-          error={errors.email?.message}
+          placeholder="Usuário"
+          error={errors.user?.message}
         />
 
         <View className="flex flex-row w-full h-16 bg-slate-100 rounded relative">
