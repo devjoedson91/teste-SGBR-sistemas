@@ -62,17 +62,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function signIn({ user, password }: SignInProps) {
     try {
-      // setLoadingAuth(true);
+      setLoadingAuth(true);
 
-      // const response = await api.post("/signIn", { user, password });
+      const response = await api.post("/signIn", { user, password });
 
-      // const { id, name, token } = response.data.user;
+      const { id, name, token } = response.data.user;
 
-      // const data = { ...response.data.user };
+      const data = { ...response.data.user };
 
-      // await AsyncStorage.setItem("@sgbr-sistemas", JSON.stringify(data));
+      await AsyncStorage.setItem("@sgbr-sistemas", JSON.stringify(data));
 
-      // setCurrentUser({ id, name, token });
+      setCurrentUser({ id, name, token });
 
       router.push("/home");
     } catch (error: any) {

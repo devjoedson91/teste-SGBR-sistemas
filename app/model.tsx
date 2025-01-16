@@ -4,17 +4,33 @@ import {
   KeyboardAvoidingView,
   Platform,
   Text,
+  View,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { useGetBrandsId } from "@/data/hooks/useBrands";
 import { BrandItem } from "@/components/brand-item";
 import { Header } from "@/components/header";
 import { useLocalSearchParams } from "expo-router";
+import { SearchInput } from "@/components/ui/search-input";
+import { useMemo, useState } from "react";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function Model() {
   const params = useLocalSearchParams();
 
-  const { data: models, isFetching } = useGetBrandsId(params.id as string);
+  const { data, isFetching } = useGetBrandsId(params.id as string);
+
+  const [searchText, setSearchText] = useState("");
+
+  const modelsFiltered = useMemo(() => {
+    if (searchText.length) {
+      const models = data?.filter((item) =>
+        item.nome.toLowerCase().includes(searchText.toLowerCase())
+      );
+
+      return models;
+    }
+  }, [searchText]);
 
   return (
     <KeyboardAvoidingView
@@ -25,24 +41,37 @@ export default function Model() {
       <Animatable.View
         delay={600}
         animation="fadeInUp"
-        className="flex-1 justify-center bg-white rounded-t-[50px] p-5"
+        className="flex-1 gap-10 justify-center bg-white rounded-t-[50px] p-5"
       >
-        <Text className="text-center text-darkBlue text-xl">
-          Modelos relacionados a marca:
-        </Text>
-        <Text className="text-center text-mainBlue font-bold text-2xl">
-          {params.name}
-        </Text>
+        <View className="gap-4 items-center self-center">
+          <Text className="text-center text-darkBlue text-xl">
+            Modelos relacionados a marca:
+          </Text>
+          <View className="flex-row gap-4">
+            <Text className="text-center text-mainBlue font-bold text-2xl">
+              {params.name}
+            </Text>
+            <AntDesign name="checkcircle" size={24} color="#00071a" />
+          </View>
+        </View>
+
+        {!isFetching && (
+          <SearchInput
+            value={searchText}
+            onChangeText={(text) => setSearchText(text)}
+          />
+        )}
 
         {isFetching ? (
           <ActivityIndicator size={24} color="#0062fe" />
         ) : (
           <FlatList
-            data={models || []}
-            contentContainerStyle={{ gap: 20, marginTop: 40 }}
+            data={modelsFiltered ? modelsFiltered : data}
+            contentContainerStyle={{ gap: 20 }}
             renderItem={({ item }) => <BrandItem item={item} disabled />}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.codigo}
+            ListEmptyComponent={<Text>Nenhum resultado encontrado.</Text>}
           />
         )}
       </Animatable.View>

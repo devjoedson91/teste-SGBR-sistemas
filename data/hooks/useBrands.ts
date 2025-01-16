@@ -2,12 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { BrandsModelProps } from "./types";
 
-const BASE_URL = " https://parallelum.com.br/fipe/api/v1/carros/marcas";
+const BASE_URL = " https://parallelum.com.br/fipe/api";
 
 export function useGetBrands() {
   const query = useQuery({
     queryFn: async (): Promise<BrandsModelProps[]> => {
-      const response = await axios.get(BASE_URL);
+      const response = await axios.get(`${BASE_URL}/v1/carros/marcas`);
 
       return response.data;
     },
@@ -21,7 +21,9 @@ export function useGetBrands() {
 export function useGetBrandsId(brand_id: string) {
   const query = useQuery({
     queryFn: async (): Promise<BrandsModelProps[]> => {
-      const response = await axios.get(`${BASE_URL}/${brand_id}/modelos`);
+      const response = await axios.get(
+        `${BASE_URL}/v1/carros/marcas/${brand_id}/modelos`
+      );
 
       return response.data.modelos;
     },
