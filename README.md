@@ -5,7 +5,16 @@
 O aplicativo consiste em mostrar uma lista de marcas de carro,
 podendo acessar uma marca específica mostrando assim os seus respectivos modelos.
 
-## Tecnologias utilizadas
+## Tecnologias utilizadas ⚙👨‍💻
+
+- Expo
+- Typescript
+- Context API
+- Async Storage
+- NativeWind
+- React Navigation
+- Axios
+- Tanstack React Query
 
 ## Como executar o projeto
 
