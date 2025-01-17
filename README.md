@@ -5,7 +5,16 @@
 O aplicativo consiste em mostrar uma lista de marcas de carro,
 podendo acessar uma marca específica mostrando assim os seus respectivos modelos.
 
-## Tecnologias utilizadas
+## Tecnologias utilizadas ⚙👨‍💻
+
+- Expo
+- Typescript
+- Context API
+- Async Storage
+- NativeWind
+- React Navigation
+- Axios
+- Tanstack React Query
 
 ## Como executar o projeto
 
@@ -14,7 +23,7 @@ podendo acessar uma marca específica mostrando assim os seus respectivos modelo
    Abra o git bash no seu diretório de projetos e execute:
 
    ```bash
-   git https://github.com/devjoedson91/teddy-mobile-test.git
+   git https://github.com/devjoedson91/teste-SGBR-sistemas.git
    ```
 
 2. Instalando dependências
