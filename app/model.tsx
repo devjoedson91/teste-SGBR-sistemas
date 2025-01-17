@@ -8,12 +8,11 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { useGetBrandsId } from "@/data/hooks/useBrands";
-import { BrandItem } from "@/components/brand-item";
+import { BrandModelsItem } from "@/components/brand-models-item";
 import { Header } from "@/components/header";
 import { useLocalSearchParams } from "expo-router";
 import { SearchInput } from "@/components/ui/search-input";
 import { useMemo, useState } from "react";
-import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function Model() {
   const params = useLocalSearchParams();
@@ -47,12 +46,9 @@ export default function Model() {
           <Text className="text-center text-darkBlue text-xl">
             Modelos relacionados a marca:
           </Text>
-          <View className="flex-row gap-4">
-            <Text className="text-center text-mainBlue font-bold text-2xl">
-              {params.name}
-            </Text>
-            <AntDesign name="checkcircle" size={24} color="#00071a" />
-          </View>
+          <Text className="text-center text-mainBlue font-bold text-2xl">
+            {params.name}
+          </Text>
         </View>
 
         {!isFetching && (
@@ -68,7 +64,7 @@ export default function Model() {
           <FlatList
             data={modelsFiltered ? modelsFiltered : data}
             contentContainerStyle={{ gap: 20 }}
-            renderItem={({ item }) => <BrandItem item={item} disabled />}
+            renderItem={({ item }) => <BrandModelsItem item={item} disabled />}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.codigo}
             ListEmptyComponent={<Text>Nenhum resultado encontrado.</Text>}

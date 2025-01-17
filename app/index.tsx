@@ -12,9 +12,11 @@ import {
 import * as Animatable from "react-native-animatable";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import { AuthContext } from "@/data/contexts/AuthContext";
+import { useRouter } from "expo-router";
+import { useFocusEffect } from "@react-navigation/native";
 
 const schema = z.object({
   user: z.string({ message: "Informe seu usuário" }),
@@ -32,11 +34,13 @@ export default function SignIn() {
     resolver: zodResolver(schema),
   });
 
+  const router = useRouter();
+
   const [hidePass, setHidePass] = useState(true);
 
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
-  const { signIn, loadingAuth } = useContext(AuthContext);
+  const { signIn, loadingAuth, isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     const showWelcomeText = Keyboard.addListener("keyboardDidShow", () => {
@@ -52,6 +56,14 @@ export default function SignIn() {
       hideWelcomeText.remove();
     };
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      isAuthenticated && router.push("/home");
+
+      return () => {};
+    }, [isAuthenticated])
+  );
 
   async function handleNavigation(data: z.infer<typeof schema>) {
     await signIn(data);

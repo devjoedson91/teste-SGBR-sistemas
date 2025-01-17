@@ -4,15 +4,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Text,
-  View,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { useGetBrands } from "@/data/hooks/useBrands";
-import { BrandItem } from "@/components/brand-item";
+import { BrandModelsItem } from "@/components/brand-models-item";
 import { Header } from "@/components/header";
 import { SearchInput } from "@/components/ui/search-input";
 import { useMemo, useState } from "react";
-import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function Home() {
   const { data, isFetching } = useGetBrands();
@@ -40,10 +38,9 @@ export default function Home() {
         animation="fadeInUp"
         className="flex-1 gap-10 justify-center bg-white rounded-t-[50px] p-5"
       >
-        <View className="flex-row gap-4 self-center">
-          <Text className="text-mainBlue font-bold text-2xl">Marcas</Text>
-          <AntDesign name="checkcircle" size={24} color="#00071a" />
-        </View>
+        <Text className="text-mainBlue text-center font-bold text-2xl">
+          Marcas
+        </Text>
 
         {!isFetching && (
           <SearchInput
@@ -58,7 +55,7 @@ export default function Home() {
           <FlatList
             data={brandsFiltered ? brandsFiltered : data}
             contentContainerStyle={{ gap: 20 }}
-            renderItem={({ item }) => <BrandItem item={item} />}
+            renderItem={({ item }) => <BrandModelsItem item={item} />}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.codigo}
             ListEmptyComponent={<Text>Nenhum resultado encontrado.</Text>}
