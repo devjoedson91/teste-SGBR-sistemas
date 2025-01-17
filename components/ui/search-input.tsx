@@ -1,4 +1,4 @@
-import { Pressable, TextInput, TextInputProps, View } from "react-native";
+import { TextInput, TextInputProps, View } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 
 interface SearchInputProps extends TextInputProps {}
@@ -11,7 +11,7 @@ export function SearchInput({ ...rest }: SearchInputProps) {
         placeholder="Digite sua pesquisa..."
         {...rest}
       />
-      <View className="absolute p-3 right-2">
+      <View className="absolute h-full items-center justify-center right-0 px-3">
         <Feather name="search" size={24} color="black" />
       </View>
     </View>

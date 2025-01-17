@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { useGetBrands } from "@/data/hooks/useBrands";
-import { BrandModelsItem } from "@/components/brand-models-item";
+import { BrandsItem } from "@/components/brands-item";
 import { Header } from "@/components/header";
 import { SearchInput } from "@/components/ui/search-input";
 import { useMemo, useState } from "react";
@@ -55,7 +55,7 @@ export default function Home() {
           <FlatList
             data={brandsFiltered ? brandsFiltered : data}
             contentContainerStyle={{ gap: 20 }}
-            renderItem={({ item }) => <BrandModelsItem item={item} />}
+            renderItem={({ item }) => <BrandsItem item={item} />}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.codigo}
             ListEmptyComponent={<Text>Nenhum resultado encontrado.</Text>}

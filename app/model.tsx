@@ -8,11 +8,11 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { useGetBrandsId } from "@/data/hooks/useBrands";
-import { BrandModelsItem } from "@/components/brand-models-item";
 import { Header } from "@/components/header";
 import { useLocalSearchParams } from "expo-router";
 import { SearchInput } from "@/components/ui/search-input";
 import { useMemo, useState } from "react";
+import { ModelsItem } from "@/components/models-item";
 
 export default function Model() {
   const params = useLocalSearchParams();
@@ -64,7 +64,7 @@ export default function Model() {
           <FlatList
             data={modelsFiltered ? modelsFiltered : data}
             contentContainerStyle={{ gap: 20 }}
-            renderItem={({ item }) => <BrandModelsItem item={item} disabled />}
+            renderItem={({ item }) => <ModelsItem item={item} />}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.codigo}
             ListEmptyComponent={<Text>Nenhum resultado encontrado.</Text>}
